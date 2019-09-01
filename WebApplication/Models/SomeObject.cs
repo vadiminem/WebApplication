@@ -17,34 +17,26 @@ namespace WebApplication.Models
 
     public class Result
     {
-        [DataMember]
         public List<Traks> traks;
     }
 
     public class Traks
     {
-        [DataMember]
         public List<Sets> sets;
-        [DataMember]
         public int pos { get; set; }
-        [DataMember]
         public int vMin { get; set; }
-        [DataMember]
         public int vMax { get; set; }
 
     }
 
     public class Sets
     {
-        [DataMember]
         public List<Items> items;
     }
 
     public class Items
     {
-        [DataMember]
         public DateTime time { get; set; }
-        [DataMember]
         public float value { get; set; }
     }
 
