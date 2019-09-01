@@ -1,10 +1,6 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Threading.Tasks;
 
 namespace WebApplication.Models
 {
@@ -16,7 +12,7 @@ namespace WebApplication.Models
         [DataMember]
         public string errorMessage { get; set; }
         [DataMember]
-        public string timeGenerated { get; set; }
+        public DateTime timeGenerated { get; set; }
     }
 
     public class Result
@@ -47,9 +43,10 @@ namespace WebApplication.Models
     public class Items
     {
         [DataMember]
-        //[JsonConverter(typeof(IsoDateTimeConverter))]
         public DateTime time { get; set; }
         [DataMember]
         public float value { get; set; }
     }
+
+
 }
