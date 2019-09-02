@@ -10,7 +10,7 @@ namespace WebApplication.Controllers
         [HttpGet("GetData")]
         public SomeObject GetData()
         {
-            var path = "Data/test_set1.json";
+            var path = "wwwroot/Data/test_set1.json";
             var deserializedResult = new SomeObject();
             if (System.IO.File.Exists(path))
             {
