@@ -1,12 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
 
 namespace WebApplication.Models
 {
     public class Traks
     {
-        public Sets[] Sets { get; set; }
-        public int Pos { get; set; }
-        public int VMin { get; set; }
-        public int VMax { get; set; }
+        [JsonProperty(PropertyName = "sets")]
+        public Sets[] SetsProp { get; set; }
+        [JsonProperty(PropertyName = "pos")]
+        public int PosProp { get; set; }
+        [JsonProperty(PropertyName = "vMin")]
+        public int VMinProp { get; set; }
+        [JsonProperty(PropertyName = "vMax")]
+        public int VMaxProp { get; set; }
     }
 }

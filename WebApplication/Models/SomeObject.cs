@@ -1,11 +1,16 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 
 namespace WebApplication.Models
 {
+    [Serializable]
     public class SomeObject
     {
-        public Result Result { get; set; }
-        public string ErrorMessage { get; set; }
-        public DateTime TimeGenerated { get; set; }
+        [JsonProperty(PropertyName = "result")]
+        public Result ResultProp { get; set; }
+        [JsonProperty(PropertyName = "errorMessage")]
+        public string ErrorMessageProp { get; set; }
+        [JsonProperty(PropertyName = "timeGenerated")]
+        public DateTime TimeGeneratedProp { get; set; }
     }
 }
