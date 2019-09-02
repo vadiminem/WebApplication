@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
 
 namespace WebApplication.Models
 {
     public class Sets
     {
-        public Items[] Items { get; set; }
+        [JsonProperty(PropertyName = "items")]
+        public Items[] ItemsProp { get; set; }
     }
 }

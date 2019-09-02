@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
 
 namespace WebApplication.Models
 {
     public class Result
     {
-        public Traks[] Traks { get; set; }
+        [JsonProperty(PropertyName = "traks")]
+        public Traks[] TraksProp { get; set; }
     }
 }
