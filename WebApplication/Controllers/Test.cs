@@ -4,10 +4,9 @@ using WebApplication.Models;
 
 namespace WebApplication.Controllers
 {
-    [Route("api/[controller]")]
     public class Test : Controller
     {
-        [HttpGet("GetData")]
+        [HttpGet]
         public SomeObject GetData()
         {
             var path = "wwwroot/Data/test_set1.json";
