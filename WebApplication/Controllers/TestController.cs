@@ -4,13 +4,18 @@ using WebApplication.Models;
 
 namespace WebApplication.Controllers
 {
-    [Route("api/[controller]")]
-    public class Test : Controller
+    public class TestController : Controller
     {
-        [HttpGet("GetData")]
+        private readonly string path;
+
+        public TestController(string path)
+        {
+            this.path = path;
+        }
+
+        [HttpGet]
         public SomeObject GetData()
         {
-            var path = "Data/test_set1.json";
             var deserializedResult = new SomeObject();
             if (System.IO.File.Exists(path))
             {
