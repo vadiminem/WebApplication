@@ -35,7 +35,6 @@ namespace WebApplication
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
             app.UseMvc(routes =>
             {
                 routes.MapRoute("default", "api/{controller}/{action}/{id?}");
