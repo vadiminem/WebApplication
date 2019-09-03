@@ -14,14 +14,23 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet]
-        public SomeObject GetData()
+        public IActionResult GetData()
         {
             var deserializedResult = new SomeObject();
-            if (System.IO.File.Exists(path))
+            try
             {
-                deserializedResult = JsonConvert.DeserializeObject<SomeObject>(System.IO.File.ReadAllText(path));
+                if (System.IO.File.Exists(path))
+                {
+
+                    deserializedResult = JsonConvert.DeserializeObject<SomeObject>(System.IO.File.ReadAllText(path));
+                }
+                return Ok(new { Result = deserializedResult.ResultProp, TimeGenerated = deserializedResult.TimeGeneratedProp });
+
             }
-            return deserializedResult;
+            catch
+            {
+                return Ok(new { ErrorMessage = deserializedResult.ErrorMessageProp, TimeGenerated = deserializedResult.TimeGeneratedProp });
+            }
         }
     }
 }
