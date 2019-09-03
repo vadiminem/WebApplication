@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System;
+using System.IO;
 using WebApplication.Models;
 
 namespace WebApplication.Controllers
@@ -21,15 +23,15 @@ namespace WebApplication.Controllers
             {
                 if (System.IO.File.Exists(path))
                 {
-
                     deserializedResult = JsonConvert.DeserializeObject<SomeObject>(System.IO.File.ReadAllText(path));
                 }
-                return Ok(new { Result = deserializedResult.ResultProp, TimeGenerated = deserializedResult.TimeGeneratedProp });
+                else throw new FileNotFoundException();
+                return Ok(new { Result = deserializedResult.ResultProp, TimeGenerated = DateTime.Now });
 
             }
-            catch
+            catch (Exception ex)
             {
-                return Ok(new { ErrorMessage = deserializedResult.ErrorMessageProp, TimeGenerated = deserializedResult.TimeGeneratedProp });
+                return Ok(new { ErrorMessage = ex.Message, TimeGenerated = DateTime.Now });
             }
         }
     }
