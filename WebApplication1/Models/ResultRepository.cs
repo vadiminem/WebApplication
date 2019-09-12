@@ -14,7 +14,12 @@ namespace WebApplication1.Models
     public class ResultRepository
     {
 
-        string connectionString = "User ID=postgres;Password=1234;Host=localhost; Port=5432; Database=testwebapidb; Pooling=true;";
+        private string connectionString = default;
+        public ResultRepository(string connectionString)
+        {
+            this.connectionString = connectionString;
+        }
+
         public void Create(SomeObject someObject)
         {
             using (IDbConnection db = new NpgsqlConnection(connectionString))

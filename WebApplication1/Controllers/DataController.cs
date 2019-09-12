@@ -15,13 +15,13 @@ namespace WebApplication1.Controllers
 {
     public class DataController : ControllerBase
     {
-        ResultRepository rep = new ResultRepository();
-        public DataController()
-        {
-            var provider = "Postgres";
-            var connectionString = "User ID=postgres;Password=1234;host=localhost; port=5432; database=testwebapidb;";
-            var assembly = typeof(DbMigration).Assembly;
+        ResultRepository rep = default;
 
+        public DataController(string connectionString)
+        {
+            rep = new ResultRepository(connectionString);
+            var provider = "Postgres";
+            var assembly = typeof(DbMigration).Assembly;
             using (var migrator = new Migrator(provider, connectionString, assembly))
             {
                 migrator.Migrate();
