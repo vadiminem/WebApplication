@@ -7,8 +7,9 @@ namespace WebApplication.Models
     public class Items
     {
         [JsonProperty(PropertyName = "time")]
-        public DateTime TimeProp { get; set; }
+        public DateTime Time { get; set; }
         [JsonProperty(PropertyName = "value")]
-        public float ValueProp { get; set; }
+        public float Value { get; set; }
+        public int RandValue { get; set; }
     }
 }

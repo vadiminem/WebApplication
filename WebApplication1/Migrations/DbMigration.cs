@@ -1,35 +1,16 @@
 ﻿using System.Data;
 using ThinkingHome.Migrator.Framework;
 
-[Migration(1)]
+[Migration(8)]
 public class DbMigration : Migration
 {
     public override void Apply()
     {
-        Database.AddTable("Result",
-            new Column("id", DbType.Int32, ColumnProperty.PrimaryKey),
-            new Column("traksId", DbType.Int32));
-        Database.AddTable("Traks",
-            new Column("id", DbType.Int32, ColumnProperty.PrimaryKey),
-            new Column("resultId", DbType.Int32),
-            new Column("pos", DbType.Int32),
-            new Column("vMin", DbType.Int32),
-            new Column("vMax", DbType.Int32));
-        Database.AddTable("Sets",
-            new Column("id", DbType.Int32, ColumnProperty.PrimaryKey),
-            new Column("traksId", DbType.Int32));
-        Database.AddTable("Items",
-            new Column("id", DbType.Int32, ColumnProperty.PrimaryKey),
-            new Column("setsId", DbType.Int32),
-            new Column("time", DbType.DateTime),
-            new Column("value", DbType.Double));
+        Database.RemoveColumn("Result", "traks");
+        Database.RenameColumn("Result", "id", "resultid");
+        Database.RenameColumn("Traks", "id", "traksid");
+        Database.RenameColumn("Sets", "id", "setsid");
+        Database.RenameColumn("Items", "id", "itemsid");
     }
 
-    public override void Revert()
-    {
-        Database.RemoveTable("Result");
-        Database.RemoveTable("Traks");
-        Database.RemoveTable("Sets");
-        Database.RemoveTable("Items");
-    }
 }

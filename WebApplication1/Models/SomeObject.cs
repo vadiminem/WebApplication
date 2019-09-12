@@ -7,10 +7,10 @@ namespace WebApplication.Models
     public class SomeObject
     {
         [JsonProperty(PropertyName = "result")]
-        public Result ResultProp { get; set; }
+        public Result Result { get; set; }
         [JsonProperty(PropertyName = "errorMessage")]
-        public string ErrorMessageProp { get; set; }
+        public string ErrorMessage { get; set; }
         [JsonProperty(PropertyName = "timeGenerated")]
-        public DateTime TimeGeneratedProp { get; set; }
+        public DateTime TimeGenerated { get; set; }
     }
 }

@@ -9,12 +9,13 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using ThinkingHome.Migrator;
 using WebApplication.Models;
+using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
     public class DataController : ControllerBase
     {
-
+        ResultRepository rep = new ResultRepository();
         public DataController()
         {
             var provider = "Postgres";
@@ -33,17 +34,17 @@ namespace WebApplication1.Controllers
             HttpResponseMessage response = await client.GetAsync("http://localhost:5000/api/test/getdata");
             if (response.IsSuccessStatusCode)
             {
-                if (response.IsSuccessStatusCode)
-                {
-                    return Ok(JsonConvert.DeserializeObject<SomeObject>(await response.Content.ReadAsStringAsync()));
-                }
+                var text = await response.Content.ReadAsStringAsync();
+                    rep.Create(JsonConvert.DeserializeObject<SomeObject>(text));
+                    return Ok("complete");
+                
             }
             return Ok();
         }
 
-        public void Get()
+        public IActionResult Get()
         {
-
+            return(Ok(rep.Get()));
         }
     }
 }

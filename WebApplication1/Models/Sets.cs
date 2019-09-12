@@ -5,6 +5,6 @@ namespace WebApplication.Models
     public class Sets
     {
         [JsonProperty(PropertyName = "items")]
-        public Items[] ItemsProp { get; set; }
+        public Items[] Items { get; set; }
     }
 }

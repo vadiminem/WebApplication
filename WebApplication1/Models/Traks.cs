@@ -5,12 +5,12 @@ namespace WebApplication.Models
     public class Traks
     {
         [JsonProperty(PropertyName = "sets")]
-        public Sets[] SetsProp { get; set; }
+        public Sets[] Sets { get; set; }
         [JsonProperty(PropertyName = "pos")]
-        public int PosProp { get; set; }
+        public int Pos { get; set; }
         [JsonProperty(PropertyName = "vMin")]
-        public int VMinProp { get; set; }
+        public int VMin { get; set; }
         [JsonProperty(PropertyName = "vMax")]
-        public int VMaxProp { get; set; }
+        public int VMax { get; set; }
     }
 }
