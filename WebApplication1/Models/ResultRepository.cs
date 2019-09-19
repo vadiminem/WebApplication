@@ -11,7 +11,14 @@ using WebApplication.Models;
 
 namespace WebApplication1.Models
 {
-    public class ResultRepository
+
+    public interface IResultRepository
+    {
+        void Create(SomeObject someObject);
+        object Get();
+    }
+
+    public class ResultRepository : IResultRepository
     {
 
         private string connectionString = default;
@@ -25,7 +32,7 @@ namespace WebApplication1.Models
             using (IDbConnection db = new NpgsqlConnection(connectionString))
             {
                 var randValue = new Random();
-                var date = DateTime.Now; Console.WriteLine(date);
+                var date = DateTime.Now;
                 var sqlQuery = "INSERT INTO \"Result\" DEFAULT VALUES;";
                 db.Execute(sqlQuery, new { cDate = date });
                 var rId = db.Query<int>("SELECT resultid FROM \"Result\";").Last();

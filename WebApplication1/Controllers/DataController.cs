@@ -15,17 +15,11 @@ namespace WebApplication1.Controllers
 {
     public class DataController : ControllerBase
     {
-        ResultRepository rep = default;
+        private IResultRepository repository;
 
-        public DataController(string connectionString)
+        public DataController(IResultRepository repository)
         {
-            rep = new ResultRepository(connectionString);
-            var provider = "Postgres";
-            var assembly = typeof(DbMigration).Assembly;
-            using (var migrator = new Migrator(provider, connectionString, assembly))
-            {
-                migrator.Migrate();
-            }
+            this.repository = repository;
         }
 
         HttpClient client = new HttpClient();
@@ -35,7 +29,7 @@ namespace WebApplication1.Controllers
             if (response.IsSuccessStatusCode)
             {
                 var text = await response.Content.ReadAsStringAsync();
-                    rep.Create(JsonConvert.DeserializeObject<SomeObject>(text));
+                    repository.Create(JsonConvert.DeserializeObject<SomeObject>(text));
                     return Ok("complete");
                 
             }
@@ -44,7 +38,7 @@ namespace WebApplication1.Controllers
 
         public IActionResult Get()
         {
-            return(Ok(rep.Get()));
+            return(Ok(repository.Get()));
         }
     }
 }

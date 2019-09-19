@@ -1,16 +1,21 @@
 ﻿using System.Data;
 using ThinkingHome.Migrator.Framework;
 
-[Migration(8)]
+[Migration(1)]
 public class DbMigration : Migration
 {
     public override void Apply()
     {
-        Database.RemoveColumn("Result", "traks");
-        Database.RenameColumn("Result", "id", "resultid");
-        Database.RenameColumn("Traks", "id", "traksid");
-        Database.RenameColumn("Sets", "id", "setsid");
-        Database.RenameColumn("Items", "id", "itemsid");
+        Database.AddTable("NotDelete", new Column("name", DbType.String));
+        Database.AddTable("Delete", new Column("name", DbType.String));
     }
+}
 
+[Migration(2)]
+public class DbMigration2: Migration
+{
+    public override void Apply()
+    {
+        Database.RemoveTable("Delete");
+    }
 }

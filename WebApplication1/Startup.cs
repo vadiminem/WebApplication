@@ -9,6 +9,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using WebApplication1.Migrations;
+using WebApplication1.Models;
 
 namespace WebApplication1
 {
@@ -17,6 +19,7 @@ namespace WebApplication1
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            new DbMigrator(Configuration.GetSection("PostgresqlConnection").Value).StartMigration();
         }
 
         public IConfiguration Configuration { get; }
@@ -26,6 +29,7 @@ namespace WebApplication1
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSingleton(Configuration.GetSection("PostgresqlConnection").Value);
+            services.AddScoped<IResultRepository, ResultRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
