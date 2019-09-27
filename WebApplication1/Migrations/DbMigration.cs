@@ -6,8 +6,8 @@ public class DbMigration : Migration
 {
     public override void Apply()
     {
-        Database.AddTable("NotDelete", new Column("name", DbType.String));
-        Database.AddTable("Delete", new Column("name", DbType.String));
+        Database.AddTable("notdelete", new Column("name", DbType.String));
+        Database.AddTable("delete", new Column("name", DbType.String));
     }
 }
 
@@ -16,7 +16,7 @@ public class DbMigration2 : Migration
 {
     public override void Apply()
     {
-        Database.RemoveTable("Delete");
+        Database.RemoveTable("delete");
     }
 }
 
@@ -25,7 +25,7 @@ public class DbMigration3 : Migration
 {
     public override void Apply()
     {
-        Database.AddColumn("NotDelete",
+        Database.AddColumn("notdelete",
             new Column("id", DbType.Int32, ColumnProperty.Identity));
     }
 }
@@ -35,8 +35,8 @@ public class DbMigration4 : Migration
 {
     public override void Apply()
     {
-        Database.RemoveColumn("NotDelete", "id");
-        Database.AddColumn("NotDelete",
+        Database.RemoveColumn("notdelete", "id");
+        Database.AddColumn("notdelete",
             new Column("id", DbType.Int32, ColumnProperty.PrimaryKeyWithIdentity));
     }
 }
