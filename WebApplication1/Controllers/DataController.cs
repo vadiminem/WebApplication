@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Reflection;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using ThinkingHome.Migrator;
 using WebApplication.Models;
-using WebApplication1.Models;
+using WebApplication1.Interfaces;
 
 namespace WebApplication1.Controllers
 {
@@ -31,7 +25,6 @@ namespace WebApplication1.Controllers
                 var text = await response.Content.ReadAsStringAsync();
                     repository.Create(JsonConvert.DeserializeObject<SomeObject>(text));
                     return Ok("complete");
-                
             }
             return Ok();
         }

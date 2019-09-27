@@ -6,6 +6,13 @@ namespace WebApplication.Models
 {
     public class Items
     {
+        public Items() { }
+        public Items(Items items)
+        {
+            Time = items.Time;
+            Value = items.Value;
+            RandValue = items.RandValue;
+        }
         [JsonProperty(PropertyName = "time")]
         public DateTime Time { get; set; }
         [JsonProperty(PropertyName = "value")]
