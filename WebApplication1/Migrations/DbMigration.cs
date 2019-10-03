@@ -2,6 +2,6 @@
 
 public class DbMigration
 {
-    CreateTablesMigration mg1;
-    AddColToResultMigration mg2;
+    CreateTablesMigration createTablesMigration; // Миграция 1.
+    AddColToResultMigration addColToResultMigration; // Миграция 2.
 }
