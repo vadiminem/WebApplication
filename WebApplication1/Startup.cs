@@ -15,8 +15,7 @@ namespace WebApplication1
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            new DbMigrator(Configuration.GetSection("PostgresqlConnectionWithDbName").Value, 
-                Configuration.GetSection("PostgresqlConnection").Value).StartMigration();
+            new DbMigrator(Configuration.GetSection("PostgresqlConnection").Value).StartMigration();
             new InitializeMappings().Initialize();
         }
 
