@@ -15,8 +15,6 @@ namespace WebApplication1
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            new DbMigrator(Configuration.GetSection("PostgresqlConnection").Value).StartMigration();
-            new InitializeMappings().Initialize();
         }
 
         public IConfiguration Configuration { get; }
@@ -28,17 +26,28 @@ namespace WebApplication1
             services.AddScoped<IResultRepository, ResultRepository>();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime applicationLifetime)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
+            applicationLifetime.ApplicationStarted.Register(OnApplicationStarted);
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute("default", "api/{controller}/{action}/{id?}");
             });
+        }
+
+        protected void OnApplicationStarted()
+        {
+            var migrator = new DbMigrator(Configuration.GetSection("PostgresqlConnection").Value);
+            var mapping = new InitializeMappings();
+
+            migrator.StartMigration();
+            mapping.Initialize();
         }
     }
 }
