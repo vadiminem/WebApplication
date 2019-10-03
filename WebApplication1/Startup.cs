@@ -24,8 +24,7 @@ namespace WebApplication1
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddSingleton(Configuration.GetSection("PostgresqlConnectionWithDbName").Value);
-            //services.AddSingleton(Configuration.GetSection("PostgresqlConnection").Value);
+            services.AddSingleton(Configuration.GetSection("PostgresqlConnection").Value);
             services.AddScoped<IResultRepository, ResultRepository>();
         }
 
