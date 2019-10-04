@@ -44,7 +44,7 @@ namespace WebApplication1
 
         protected void OnApplicationStarted()
         {
-            var migrator = new DbMigrator(Configuration.GetSection("PostgresqlConnection").Value);
+            var migrator = new DbMigrator(Configuration.GetSection("ConnectionStrings"));
             var mapping = new InitializeMappings();
 
             migrator.StartMigration();
