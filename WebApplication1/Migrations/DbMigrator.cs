@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using System;
 using ThinkingHome.Migrator;
 
 namespace WebApplication1.Migrations
@@ -13,11 +14,18 @@ namespace WebApplication1.Migrations
 
         public void StartMigration()
         {
-            var provider = "Postgres";
-            var assembly = typeof(DbMigration).Assembly;
-            using (var migrator = new Migrator(provider, connectionStrings.GetSection("PostgresqlConnection").Value, assembly))
+            try
             {
-                migrator.Migrate();
+                var provider = "Postgres";
+                var assembly = typeof(DbMigration).Assembly;
+                using (var migrator = new Migrator(provider, connectionStrings.GetSection("PostgresqlConnection").Value, assembly))
+                {
+                    migrator.Migrate();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
     }
