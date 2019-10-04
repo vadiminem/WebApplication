@@ -48,7 +48,8 @@ namespace WebApplication1.Models
             using (IDbConnection db = new NpgsqlConnection(connectionStrings.GetSection("PostgresqlConnection").Value))
             {
                 var someObject = new SomeObject();
-                var id = db.GetList<ResultModel>().Last().Id;
+                var id = db.GetList<ResultModel>().OrderBy(t => t.Id).Last().Id;
+                Console.WriteLine(id);
                 someObject.Result = new Result(db.Get<ResultModel>(id));
                 var traks = db.GetList<TraksModel>().Where(t => t.ResultId == id).ToArray();
                 someObject.Result.SetTraks(traks);
