@@ -49,7 +49,6 @@ namespace WebApplication1.Models
             {
                 var someObject = new SomeObject();
                 var id = db.GetList<ResultModel>().OrderBy(t => t.Id).Last().Id;
-                Console.WriteLine(id);
                 someObject.Result = new Result(db.Get<ResultModel>(id));
                 var traks = db.GetList<TraksModel>().Where(t => t.ResultId == id).ToArray();
                 someObject.Result.SetTraks(traks);
