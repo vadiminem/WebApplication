@@ -2,6 +2,7 @@
 using System.Data;
 using System.Linq;
 using DapperExtensions;
+using Microsoft.Extensions.Configuration;
 using Npgsql;
 using WebApplication.Models;
 using WebApplication1.Interfaces;
@@ -10,16 +11,16 @@ namespace WebApplication1.Models
 {
     public class ResultRepository : IResultRepository
     {
-        private string connectionString = default;
-        public ResultRepository(string connectionString)
+        private IConfigurationSection connectionStrings = default;
+        public ResultRepository(IConfigurationSection connectionStrings)
         {
-            this.connectionString = connectionString;
+            this.connectionStrings = connectionStrings;
         }
 
         public void Create(SomeObject someObject)
         {
             var randValue = new Random();
-            using (var db = new NpgsqlConnection(connectionString))
+            using (var db = new NpgsqlConnection(connectionStrings.GetSection("PostgresqlConnection").Value))
             {
                 var res = new ResultModel(someObject.Result);
                 var id = db.Insert(res);
@@ -44,7 +45,7 @@ namespace WebApplication1.Models
 
         public SomeObject Get()
         {
-            using (IDbConnection db = new NpgsqlConnection(connectionString))
+            using (IDbConnection db = new NpgsqlConnection(connectionStrings.GetSection("PostgresqlConnection").Value))
             {
                 var someObject = new SomeObject();
                 var id = db.GetList<ResultModel>().Last().Id;
