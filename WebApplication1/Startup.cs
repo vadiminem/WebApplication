@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using WebApplication1.Interfaces;
 using WebApplication1.Mapping;
 using WebApplication1.Migrations;
@@ -43,11 +44,18 @@ namespace WebApplication1
 
         protected void OnApplicationStarted()
         {
-            var migrator = new DbMigrator(Configuration.GetSection("ConnectionStrings"));
-            var mapping = new InitializeMappings();
+            try
+            {
+                var migrator = new DbMigrator(Configuration.GetSection("ConnectionStrings"));
+                var mapping = new InitializeMappings();
 
-            migrator.StartMigration();
-            mapping.Initialize();
+                migrator.StartMigration();
+                mapping.Initialize();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }
