@@ -1,6 +1,7 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using WebApplication.Models;
 using WebApplication1.Interfaces;
@@ -10,21 +11,25 @@ namespace WebApplication1.Controllers
     public class DataController : ControllerBase
     {
         private IResultRepository repository;
+        private IConfigurationSection connectionStrings;
 
-        public DataController(IResultRepository repository)
+        public DataController(IResultRepository repository, IConfigurationSection connectionStrings)
         {
             this.repository = repository;
+            this.connectionStrings = connectionStrings;
         }
 
-        HttpClient client = new HttpClient();
         public async Task<IActionResult> Sync()
         {
-            HttpResponseMessage response = await client.GetAsync("http://localhost:5000/api/test/getdata");
-            if (response.IsSuccessStatusCode)
+            using (var client = new HttpClient())
             {
-                var text = await response.Content.ReadAsStringAsync();
+                HttpResponseMessage response = await client.GetAsync(connectionStrings.GetSection("GetDataAddress").Value);
+                if (response.IsSuccessStatusCode)
+                {
+                    var text = await response.Content.ReadAsStringAsync();
                     repository.Create(JsonConvert.DeserializeObject<SomeObject>(text));
                     return Ok("complete");
+                }
             }
             return Ok();
         }
