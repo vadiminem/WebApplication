@@ -6,25 +6,26 @@ using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using WebApplication.Models;
 using WebApplication1.Interfaces;
+using WebApplication1.Settings;
 
 namespace WebApplication1.Controllers
 {
     public class DataController : ControllerBase
     {
         private IResultRepository repository;
-        private IConfigurationSection connectionStrings;
+        private RoutesSettings routesSettings;
 
-        public DataController(IResultRepository repository, IConfigurationSection connectionStrings)
+        public DataController(IResultRepository repository, RoutesSettings routesSettings)
         {
             this.repository = repository;
-            this.connectionStrings = connectionStrings;
+            this.routesSettings = routesSettings;
         }
 
         public async Task<IActionResult> Sync()
         {
             using (var client = new HttpClient())
             {
-                HttpResponseMessage response = await client.GetAsync(connectionStrings.GetSection("GetDataAddress").Value);
+                HttpResponseMessage response = await client.GetAsync(routesSettings.GetDataAddress);
                 if (response.IsSuccessStatusCode)
                 {
                     try

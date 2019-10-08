@@ -6,15 +6,16 @@ using Microsoft.Extensions.Configuration;
 using Npgsql;
 using WebApplication.Models;
 using WebApplication1.Interfaces;
+using WebApplication1.Settings;
 
 namespace WebApplication1.Models
 {
     public class ResultRepository : IResultRepository
     {
-        private IConfigurationSection connectionStrings = default;
-        public ResultRepository(IConfigurationSection connectionStrings)
+        private PostgresSettings settings;
+        public ResultRepository(PostgresSettings settings)
         {
-            this.connectionStrings = connectionStrings;
+            this.settings = settings;
         }
 
         public void Create(SomeObject someObject)
@@ -22,7 +23,7 @@ namespace WebApplication1.Models
             try
             {
                 var randValue = new Random();
-                using (var db = new NpgsqlConnection(connectionStrings.GetSection("PostgresqlConnection").Value))
+                using (var db = new NpgsqlConnection(settings.ConnectionString))
                 {
                     var res = new ResultModel(someObject.Result);
                     var id = db.Insert(res);
@@ -54,7 +55,7 @@ namespace WebApplication1.Models
         {
             try
             {
-                using (IDbConnection db = new NpgsqlConnection(connectionStrings.GetSection("PostgresqlConnection").Value))
+                using (IDbConnection db = new NpgsqlConnection(settings.ConnectionString))
                 {
                     var someObject = new SomeObject();
                     var id = db.GetList<ResultModel>().OrderBy(t => t.Id).Last().Id;
