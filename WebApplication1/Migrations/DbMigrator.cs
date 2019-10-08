@@ -1,15 +1,16 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System;
 using ThinkingHome.Migrator;
+using WebApplication1.Settings;
 
 namespace WebApplication1.Migrations
 {
     public class DbMigrator
     {
-        private IConfigurationSection connectionStrings = default;
-        public DbMigrator(IConfigurationSection connectionStrings)
+        private PostgresSettings settings;
+        public DbMigrator(PostgresSettings settings)
         {
-            this.connectionStrings = connectionStrings;
+            this.settings = settings;
         }
 
         public void StartMigration()
@@ -18,7 +19,7 @@ namespace WebApplication1.Migrations
             {
                 var provider = "Postgres";
                 var assembly = typeof(DbMigration).Assembly;
-                using (var migrator = new Migrator(provider, connectionStrings.GetSection("PostgresqlConnection").Value, assembly))
+                using (var migrator = new Migrator(provider, settings.ConnectionString, assembly))
                 {
                     migrator.Migrate();
                 }
